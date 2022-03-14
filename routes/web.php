@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\MediaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,6 +21,13 @@ Route::get('/', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+/**
+ * upload media
+ */
+Route::get('media',[MediaController::class,'index'])->name('media.index');
+Route::get('upload',[MediaController::class,'upload'])->name('upload');
+Route::post('media/store',[MediaController::class,'store'])->name('media.store');
 
 Route::get('contact',[ContactController::class,'index'])->name('contact.index');
 
