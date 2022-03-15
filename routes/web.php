@@ -26,8 +26,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
  * upload media
  */
 Route::get('media',[MediaController::class,'index'])->name('media.index');
-Route::get('upload',[MediaController::class,'upload'])->name('upload');
 Route::post('media/store',[MediaController::class,'store'])->name('media.store');
+Route::post('media/destroy',[MediaController::class,'destroy'])->name('media.destroy');
 
 Route::get('contact',[ContactController::class,'index'])->name('contact.index');
 

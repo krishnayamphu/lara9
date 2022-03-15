@@ -10,25 +10,30 @@ class MediaController extends Controller
     public function index(){
          
         $directory="uploads"; //storage/app/uploads
-        $files = Storage::allFiles($directory);
+        $files = Storage::allFiles('uploads');
+
         $images=array();
         foreach ($files as $file) {
             $ext = pathinfo($file, PATHINFO_EXTENSION); //pathinfo() is php function
             if($ext=='jpg'||$ext=='png'||$ext=='gif'){
-                $images[]= $file;
+                $images[]=htmlspecialchars($file);
             }
             
           }
         return view("media",['files'=>$images]);
     }
 
-    public function upload(){
-        return view("upload");
+    public function store(Request $request){
+        $path = $request->file('myfile')->store('uploads');
+        // $path = Storage::putFile('uploads', $request->file('myfile'));
+        return redirect()->route('media.index')->with('success','File upload successfully.');
     }
 
-    public function store(Request $request){
-        $path = $request->file('myfile')->store('public');
-        // $path = Storage::putFile('public', $request->file('myfile'));
-        return redirect()->route('upload')->with('success','File upload successfully.');
+    public function destroy(Request $request){
+        $filename = $request->pic;
+        Storage::delete($filename);
+        return redirect()->route('media.index')->with('success','File deleted successfully.');
     }
+
+
 }
