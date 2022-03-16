@@ -47,4 +47,4 @@ Route::delete('contact/{id}',[ContactController::class,'destroy'])->name('contac
 //     Route::delete('contact/{id}',[ContactController::class,'destroy'])->name('contact.destroy');
 // });
 
-// Route::resource('test','App\Http\Controllers\TestController');
+Route::resource('category','App\Http\Controllers\Category\CategoryController');
