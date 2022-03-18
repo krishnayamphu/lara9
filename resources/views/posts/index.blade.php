@@ -24,7 +24,7 @@
         <td>{{$post->id}}</td>
         <td>{{$post->title}}</td>
         <td>
-          @foreach($post->categories() as $category)
+          @foreach($post->categories as $category)
             <span>{{$category->name}}</span>
           @endforeach
         </td>

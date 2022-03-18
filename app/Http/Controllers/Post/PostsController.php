@@ -12,8 +12,8 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts=Post::all();
-        return $posts;
+        $posts=Post::with('categories')->get();
+        // return $posts;
         return view('posts.index',['posts'=>$posts]);
     }
 
