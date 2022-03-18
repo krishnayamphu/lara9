@@ -12,8 +12,9 @@ class PostsController extends Controller
 
     public function index()
     {
-        $categories=Category::all();
-        return view('posts.index',['categories'=>$categories]);
+        $posts=Post::all();
+        return $posts;
+        return view('posts.index',['posts'=>$posts]);
     }
 
     public function create()
@@ -33,7 +34,7 @@ class PostsController extends Controller
 
         $file = $request->file('pic');
         $thumb_name = $file->getClientOriginalName();
-
+            
         $post=new Post();
         $post->title=$request->title;
         $post->text=$request->text;

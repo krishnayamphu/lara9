@@ -14,6 +14,6 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->morphedByMany(Post::class, 'category_has_posts');
+        return $this->belongsToMany(Post::class, 'category_has_posts','category_id','post_id');
     }
 }
