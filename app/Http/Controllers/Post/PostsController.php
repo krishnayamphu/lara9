@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Post;
 
 use Illuminate\Http\Request;
@@ -9,20 +8,18 @@ use App\Models\Post;
 
 class PostsController extends Controller
 {
-
     public function index()
     {
-        $posts=Post::with('categories')->get();
+        $posts = Post::with('categories')->get();
         // return $posts;
-        return view('posts.index',['posts'=>$posts]);
+        return view('posts.index', ['posts' => $posts]);
     }
 
     public function create()
     {
-        $categories=Category::all();
-        return view('posts.create',['categories'=>$categories]);
+        $categories = Category::all();
+        return view('posts.create', ['categories' => $categories]);
     }
-
 
     public function store(Request $request)
     {
@@ -30,34 +27,31 @@ class PostsController extends Controller
             'title' => 'required',
         ]);
 
-        // var_dump($request->file('pic'));
-
         $file = $request->file('pic');
         $thumb_name = $file->getClientOriginalName();
-            
-        $post=new Post();
-        $post->title=$request->title;
-        $post->text=$request->text;
-        $post->thumbnail_path=$thumb_name;
-        $post->author_id=1; //Auth::user()->id;
+        $path = $request->file('pic')->storeAs('uploads',$thumb_name);
+
+        $post = new Post();
+        $post->title = $request->title;
+        $post->text = $request->text;
+        $post->thumbnail_path = $path;
+        $post->author_id = 1; //Auth::user()->id;
         $post->save();
         $post->categories()->attach($request->category_id);
-        $msg="Post created Successfully.";
-        return redirect()->route('posts.index')->with('success',$msg);
-
+        $msg = "Post created Successfully.";
+        return redirect()->route('posts.index')->with('success', $msg);
     }
 
     public function show($id)
     {
-        $category=Category::findOrFail($id);
-        return view('category.show',['category'=>$category]);
+        $category = Category::findOrFail($id);
+        return view('category.show', ['category' => $category]);
     }
 
- 
     public function edit($id)
     {
-        $category=Category::findOrFail($id);
-        return view('category.edit',['category'=>$category]);
+        $category = Category::findOrFail($id);
+        return view('category.edit', ['category' => $category]);
     }
 
     public function update(Request $request, $id)
@@ -65,20 +59,19 @@ class PostsController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
-        
-        $category=Category::findOrFail($id);
-        $category->name=$request->name;
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
         $category->save();
 
-        $msg="Category updated Successfully.";
-        return redirect()->route('category.edit',$id)->with('success',$msg);
+        $msg = "Category updated Successfully.";
+        return redirect()->route('category.edit', $id)->with('success', $msg);
     }
-
 
     public function destroy($id)
     {
         Category::findOrFail($id)->delete();
-        $msg="Category deleted successfully.";
-        return redirect()->route('category.index')->with('success',$msg);
+        $msg = "Category deleted successfully.";
+        return redirect()->route('category.index')->with('success', $msg);
     }
 }
