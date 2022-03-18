@@ -48,3 +48,4 @@ Route::delete('contact/{id}',[ContactController::class,'destroy'])->name('contac
 // });
 
 Route::resource('category','App\Http\Controllers\Category\CategoryController');
+Route::resource('posts','App\Http\Controllers\Post\PostsController');
