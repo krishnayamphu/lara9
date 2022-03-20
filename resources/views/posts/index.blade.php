@@ -43,5 +43,8 @@
     </tr>
     @endforeach
   </table>
+
+  {{ $posts->links() }}
+  
 </div>
 @endSection

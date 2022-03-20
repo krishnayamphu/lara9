@@ -14,9 +14,11 @@ use App\Http\Controllers\MediaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/',[App\Http\Controllers\HomeController::class,'index'])->name('home');
+Route::get('single/{id}',[App\Http\Controllers\HomeController::class,'show'])->name('single.show');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');

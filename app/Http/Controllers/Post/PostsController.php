@@ -11,7 +11,7 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('categories')->get();
+        $posts = Post::with('categories')->orderBy('id','desc')->simplePaginate(2);
         // return $posts;
         return view('posts.index', ['posts' => $posts]);
     }
